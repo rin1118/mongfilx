@@ -32,11 +32,9 @@ export default class extends React.Component {
     if (isMovie) {
       try {
         if (isMovie) {
-          const request = await MoviesApi.movieDetail(parsedId);
-          result = request.data;
+          ({ data: result } = await MoviesApi.movieDetail(parsedId));
         } else {
-          const request = await TVApi.tvDetail(parsedId);
-          result = request.data;
+          ({ data: result } = await TVApi.tvDetail(parsedId));
         }
       } catch {
         this.setState({ error: "정보를 찾을 수 없습니다" });
