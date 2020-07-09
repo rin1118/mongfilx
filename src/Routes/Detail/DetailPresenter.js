@@ -3,6 +3,8 @@ import PropTypes, { symbol } from "prop-types";
 import Helmet from "react-helmet";
 import styled from "styled-components";
 import Loader from "Components/Loader";
+import Tab from "Components/Tab";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: calc(100vh - 80px);
@@ -70,9 +72,42 @@ const Overview = styled.p`
   opacity: 0.6;
   width: 55%;
   line-height: 1.5;
+  margin-bottom: 35px;
 `;
 
-const DetailPresenter = ({ result, error, loading }) =>
+const TabMenu = styled.header`
+  margin-top: 60px;
+  color: white;
+  width: 50%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(70, 70, 70, 0.48);
+  z-index: 10;
+  box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.4);
+`;
+
+const List = styled.ul`
+  display: flex;
+`;
+
+const TabItem = styled.li`
+  width: 150px;
+  height: 50px;
+  text-align: center;
+  border-bottom: 5px solid ${(props) => (props.current ? "red" : "transparent")};
+  transition: border-bottom 0.25s ease-in-out;
+`;
+
+const SLink = styled(Link)`
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const DetailPresenter = ({ isMovie, result, error, loading }) =>
   loading ? (
     <>
       <Helmet>
@@ -122,6 +157,42 @@ const DetailPresenter = ({ result, error, loading }) =>
             </Item>
           </ItemContainer>
           <Overview>{result.overview}</Overview>
+          {result.videos.results.length > 0 && (
+            <iframe
+              width="538"
+              height="300"
+              src={`https://www.youtube.com/embed/${result.videos.results[0].key}`}
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          )}
+
+          {/* <TabMenu>
+            <List>
+              <TabItem>
+                {isMovie ? (
+                  <SLink to={`/movie/${result.id}/video`}>Video</SLink>
+                ) : (
+                  <SLink to={`/tvShow/${result.id}/videos`}>Video</SLink>
+                )}
+              </TabItem>
+              <TabItem>
+                {isMovie ? (
+                  <SLink to={`/movie/${result.id}/similar`}>Similar</SLink>
+                ) : (
+                  <SLink to={`/tvShow/${result.id}/similar`}>Similar</SLink>
+                )}
+              </TabItem>
+              <TabItem>
+                {isMovie ? (
+                  <SLink to={`/movie/${result.id}/reviews`}>Reviews</SLink>
+                ) : (
+                  <SLink to={`/tvShow/${result.id}/reviews`}>Reviews</SLink>
+                )}
+              </TabItem>
+            </List>
+          </TabMenu> */}
         </Data>
       </Content>
     </Container>

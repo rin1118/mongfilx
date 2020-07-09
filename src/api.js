@@ -23,6 +23,8 @@ export const TVApi = {
         query: encodeURIComponent(term),
       },
     }),
+  similar: (id) => api.get(`/tv/${id}/similar`),
+  reviews: (id) => api.get(`/tv/${id}/reviews`),
 };
 
 export const MoviesApi = {
@@ -42,4 +44,6 @@ export const MoviesApi = {
         query: encodeURIComponent(term),
       },
     }),
+  similar: (id) => api.get(`/movie/${id}/similar`),
+  reviews: (id) => api.get(`/movie/${id}/reviews`),
 };
